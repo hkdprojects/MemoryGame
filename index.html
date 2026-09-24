@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -16,14 +15,34 @@
     </audio>
 
     <audio id="button-sound">
-        <source src="touch_sound.mp3" type="audio/mpeg">
+        <source src="flipcard.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <div class="container mt-5" id="body">
+    <audio id="gameWin-sound">
+        <source src="completed.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="gameover-sound">
+        <source src="gameOver.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- game board -->
+    <div class="container" id="body">
+        <div class="hintDiv" id="hintDiv">
+            <div></div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-lightbulb hint" viewBox="0 0 16 16"
+                id="hint" onclick="takeHint()">
+                <path
+                    d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1" />
+            </svg>
+            <span id="hintCount" class="hintCount">0</span>
+        </div>
         <h1 class="text-center" id="head">Memory Game</h1>
         <div class="header" id="header">
             <div class="button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-gear btnR" viewBox="0 0 16 16" id="settings">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-gear btnS" viewBox="0 0 16 16" id="settings">
                     <path
                         d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
                     <path
@@ -43,11 +62,12 @@
                 </svg>
             </div>
         </div>
-        <div class="game-board row board" id="game-board">
+        <div class="board" id="game-board">
             <!-- Cards will be dynamically generated here -->
         </div>
-        <div class="text-center mt-3"></div>
     </div>
+
+    <!-- popup div -->
     <div id="popup" class="popup">
         <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-house home" viewBox="0 0 16 16" id="home"
             onclick="closeGame()">
@@ -73,11 +93,26 @@
             </svg>
         </div>
     </div>
+
+    <!-- cover div -->
+    <div class="cover" id="cover">
+        <h1 class="nameBoard">Memory Game</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-gear btnS coverBtnS" viewBox="0 0 16 16" id="coverBtnS">
+            <path
+                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+            <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+        </svg>
+        <button id="openCovers" class="btn openCovers" onclick="openGame()">Play</button>
+    </div>
+
+    <!-- music div -->
     <div id="musicDiv" class="musicDiv">
         <div class="closeButton">
             <h5>Settings</h5>
             <span id="close" class="close">&times;</span>
         </div>
+        <p id="info" class="info"></p>
         <div id="musicButton" class="musicButton">
             <h5>Music</h5>
             <label class="switch" for="music">
@@ -85,7 +120,7 @@
                 <span class="slider round"></span>
             </label>
         </div>
-        <div id="soundButton" class="soundButton">
+        <div id="soundButton" class="musicButton">
             <h5>Sound</h5>
             <label class="switch" for="sound">
                 <input type="checkbox" id="sound" class="myCheckbox" checked>
@@ -93,10 +128,7 @@
             </label>
         </div>
     </div>
-    <div class="cover" id="cover">
-        <h1 class="nameBoard">Memory Game</h1>
-        <button id="open" class="btn open" onclick="openGame()">Play</button>
-    </div>
+
     <script src="scripts.js"></script>
 </body>
 
