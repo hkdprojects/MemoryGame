@@ -2,7 +2,21 @@
 
 A clean, responsive, and feature-rich web-based Memory Card Game built with vanilla JavaScript, HTML5, and CSS3. Features a unique skeuomorphic/hand-drawn visual style, custom animations, realistic sound effects, and persistent local stats tracking.
 
-![Memory Game Preview](https://via.placeholder.com/800x400?text=Memory+Game+Preview) <!-- Replace with an actual screenshot of your game -->
+### 📸 Game Preview
+
+<p align="center">
+  <img src="./assets/screenshots/gameplay.png" alt="Memory Game Gameplay" width="500" style="border-radius: 8px;">
+</p>
+
+<details>
+<summary>🔍 <b>Click to view more screenshots (Home, Pause, Settings)</b></summary>
+<br>
+
+| Home Screen | Pause Menu | Settings |
+| :---: | :---: | :---: |
+| <img src="./assets/screenshots/home.png" width="250"> | <img src="./assets/screenshots/pause.png" width="250"> | <img src="./assets/screenshots/settings.png" width="250"> |
+
+</details>
 
 ---
 
