@@ -220,7 +220,6 @@ function scoreUpdate() {
         return 0;
     }else{
         return finalScore;
-
     }
 }
 
