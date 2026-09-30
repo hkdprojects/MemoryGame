@@ -216,7 +216,12 @@ function scoreUpdate() {
         finalScore += 10; // Bonus for using zero hints
     }
 
-    return finalScore;
+    if(score <= 0){
+        return 0;
+    }else{
+        return finalScore;
+
+    }
 }
 
 // --- Moves & Status ---
