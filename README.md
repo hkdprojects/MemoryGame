@@ -48,4 +48,4 @@ All you need is a modern web browser (Google Chrome, Mozilla Firefox, Safari, or
 
 1. **Clone the Repository:**
    ```bash
-   git clone [https://github.com/your-username/memory-game.git](https://github.com/your-username/memory-game.git)
+   git clone [https://github.com/hkdprojects/MemoryGame.git](https://github.com/hkdprojects/MemoryGame.git)
